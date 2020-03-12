@@ -1,3 +1,6 @@
+<?php
+set_time_limit ( 0);
+?>
 <head>
     <title>HotelAPI</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -12,6 +15,9 @@
 <div class="container h-100 col-sm-2">
     <div class="h-100 justify-content-center align-items-center">
         <form action="getResults.php" method="post">
+        <div class="form-group">
+                <br/><br/>
+
             <div class="form-group">
                 <label for="exampleInputPassword2">HotelLocation</label>
                 <input type="text" class="form-control" name="hotel_location" value="603598" id="exampleInputPassword2" value="10" placeholder="Enter Hotel Location">
@@ -22,7 +28,23 @@
                 <input type="text" class="form-control" name="hotel_radius" value="400" id="exampleInputPassword2" value="10" placeholder="Enter Meter Radius">
                 <small id="emailHelp2" class="form-text text-muted">Radius in meters</small>
             </div>
-
+            Checkin
+                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <input type="text" name="check_in" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                CheckOut
+                <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                    <input type="text" name="check_out" class="form-control datetimepicker-input"  data-target="#datetimepicker2"/>
+                    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                        <div class="input-group-text"></div>
+                    </div>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary" id="searchbtn"  onclick="getElementById('searchbtn').disabled = true;document.querySelector('form').submit();">
                 Get Results
             </button>
@@ -49,12 +71,12 @@
     $(function () {
         //14-Jan-2020%2000:00
         var picker = $('#datetimepicker1').datetimepicker({
-            format: 'DD-MMM-YYYY HH:MM:01'
+            format: 'YYYY/MM/DD'
         });
     });
     $(function () {
         var picker2 = $('#datetimepicker2').datetimepicker({
-            format: 'DD-MMM-YYYY HH:MM:01'
+            format: 'YYYY/MM/DD'
         });
     });
 </script>

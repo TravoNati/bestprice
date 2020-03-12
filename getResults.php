@@ -2,13 +2,13 @@
 set_time_limit ( 0);
 error_reporting(E_ERROR | E_PARSE);
 require 'HotelAPI.php';
-if (isset($_POST['hotel_location']) == false || isset($_POST['hotel_radius']) == false){
+if (isset($_POST['hotel_location']) == false || isset($_POST['hotel_radius']) == false || isset($_POST['check_in']) == false || isset($_POST['check_out']) == false){
     header('Location: index.php');
     die();
 }
 //grab the info here etc.
 $hotel = new HotelAPI();
-$results = $hotel->GrabHotels($_POST['hotel_location'], $_POST['hotel_radius']);
+$results = $hotel->GrabHotels($_POST['hotel_location'], $_POST['hotel_radius'], $_POST['check_in'], $_POST['check_out']);
 
 ?>
 <head>
@@ -51,6 +51,7 @@ $results = $hotel->GrabHotels($_POST['hotel_location'], $_POST['hotel_radius']);
                 echo '<td>' . $r['first_price'] . '</td>';
                 echo '</tr>';
             }
+           
             ?>
             </tbody>
         </table>

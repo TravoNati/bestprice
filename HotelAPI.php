@@ -1,13 +1,24 @@
 <?php
+set_time_limit ( 0);
+?>
+<?php
 require_once('Http.php');
 class HotelAPI{
     private $http;
     private $session;
+    
     function __construct()
     {
         $this->http = new Http();
     }
-    function GrabHotels($location, $radius){
+    function GrabHotels($location, $radius, $hotel_checkin, $hotel_checkout){
+        // Check-In EpochTime
+        $checkindate = strtotime("$hotel_checkin");
+        $checkin = $checkindate . '000';
+        // Check-out EpochTime
+        $checkoutdate = strtotime("$hotel_checkout");
+        $checkout = $checkoutdate . '000';
+
         $request = '
         {
             "rqst": {
@@ -15,19 +26,19 @@ class HotelAPI{
                     "UserName": "natsearch",
                     "Password": "121314a"
                 },
-                "Request": {
+                    "Request": {
                     "__type": "HotelsServiceSearchRequest",
                     "ClientIP": null,
                     "DesiredResultCurrency": "USD",
                     "Residency": "US",
-                    "CheckIn": "\/Date(1584991020000)\/",
-              "CheckOut": "\/Date(1585250220000)\/",
+                    "CheckIn": "\/Date('. $checkin.')\/",
+                    "CheckOut": "\/Date('. $checkout.')\/",
                     "ContractIds": null,
                     "DetailLevel": 9,
-                  "TimeoutSeconds": 3,
+                    "TimeoutSeconds": 3,
                     "ExcludeHotelDetails": false,
                     "HotelLocation": ' . $location.',
-                  "GeoLocationInfo": null,        
+                    "GeoLocationInfo": null,        
                     "HotelIds": null,
                     "IncludeCityTax": false,
                     "Nights": 0,
@@ -60,6 +71,10 @@ class HotelAPI{
             }
         }
         $this->session = $json['ServiceRequestResult']['SessionID'];
+        echo 'debug: '. $this->session;
+        echo '<br>';
+      
+
         $results = array();
         $id = 0;
         foreach ($hotels as $hotel){
@@ -72,8 +87,9 @@ class HotelAPI{
             $info['final_price'] = $allPrices[0];
             $info['hotel_id'] = $hotel;
             $info['supplier_id'] = $this->http->GetBetween($temp, 'SupplierId":', ',');
-            $info['room_name'] = $this->http->GetBetween($temp, 'RoomName":', ',');
+            $info['room_name'] = $this->http->GetBetween($temp, 'RoomName":', '",');
             $info['first_price'] = $finalPrices[$id];
+            $info['room_name'] = $this->http->GetBetween($temp, 'SessionID":', '"');
             $results[] = $info;
             $id++;
         }
