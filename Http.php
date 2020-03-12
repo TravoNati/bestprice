@@ -1,4 +1,7 @@
 <?php
+set_time_limit ( 0);
+?>
+<?php
 class Http
 {
     public $cookie_jar = 'cookies.txt';
