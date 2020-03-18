@@ -27,6 +27,8 @@ class Http
         curl_setopt($urlc, CURLOPT_COOKIEFILE, $this->cookie_jar);
         curl_setopt($urlc, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($urlc, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($urlc, CURLOPT_CONNECTTIMEOUT, 2400);
+
         //curl_setopt($urlc, CURLOPT_PROXY, '127.0.0.1:8888');
         $headers = array();
         $headers[] = 'Content-Type: application/json';
@@ -61,6 +63,7 @@ class Http
         curl_setopt($urlc, CURLOPT_COOKIEJAR, $this->cookie_jar);
         curl_setopt($urlc, CURLOPT_COOKIEFILE, $this->cookie_jar);
         curl_setopt($urlc, CURLOPT_PROXY, '127.0.0.1:8888');
+		curl_setopt($urlc, CURLOPT_CONNECTTIMEOUT, 2400);
 
         if (!empty($headers)){
             curl_setopt($urlc, CURLOPT_HTTPHEADER, $headers);
@@ -95,6 +98,7 @@ class Http
         //curl_setopt($urlc, CURLOPT_HEADER, 1);
         //curl_setopt($urlc, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($urlc,CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($urlc, CURLOPT_CONNECTTIMEOUT, 2400);
         //curl_setopt($urlc, CURLOPT_COOKIEJAR, $this->cookie_jar);
         //curl_setopt($urlc, CURLOPT_COOKIEFILE, $this->cookie_jar);
         // curl_setopt($urlc, CURLOPT_PROXY, '127.0.0.1:8888');
@@ -130,6 +134,7 @@ class Http
         curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
         curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_jar);
         curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_jar);
+		curl_setopt($urlc, CURLOPT_CONNECTTIMEOUT, 2400);
         $raw=curl_exec($ch);
         curl_close ($ch);
         if(file_exists($saveto)){
