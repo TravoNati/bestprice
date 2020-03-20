@@ -1,5 +1,7 @@
 <?php
-set_time_limit ( 0);
+
+$today = date("Y/m/d", strtotime("+ 30 days"));
+$today2 = date("Y/m/d", strtotime("+ 33 days"));
 ?>
 <head>
     <title>HotelAPI</title>
@@ -20,17 +22,27 @@ set_time_limit ( 0);
 
             <div class="form-group">
                 <label for="exampleInputPassword2">HotelLocation</label>
-                <input type="text" class="form-control" name="hotel_location" value="603598" id="exampleInputPassword2" value="10" placeholder="Enter Hotel Location">
-                <small id="emailHelp2" class="form-text text-muted">Hotel Location</small>
+                <input type="text" class="form-control" name="hotel_location" value="644158" id="exampleInputPassword2" value="10" placeholder="Enter Hotel Location">
+                <small id="emailHelp2" class="form-text text-muted">Hotel Location ID</small>
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword2">Radius in Meters</label>
-                <input type="text" class="form-control" name="hotel_radius" value="400" id="exampleInputPassword2" value="10" placeholder="Enter Meter Radius">
+                <input type="text" class="form-control" name="hotel_radius" value="75000" id="exampleInputPassword2" value="10" placeholder="Enter Meter Radius">
                 <small id="emailHelp2" class="form-text text-muted">Radius in meters</small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword2">Search Timeout</label>
+                <input type="text" class="form-control" name="timeouts" value="60" id="exampleInputPassword2" value="10" placeholder="Enter Meter Radius">
+                <small id="emailHelp2" class="form-text text-muted"></small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword2">GetPackages Timeout</label>
+                <input type="text" class="form-control" name="hotel_packagetime" value="3" id="exampleInputPassword2" value="10" placeholder="Enter Meter Radius">
+                <small id="emailHelp2" class="form-text text-muted"></small>
             </div>
             Checkin
                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                    <input type="text" name="check_in" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                    <input type="text" name="check_in" value="<?php echo $today ?>" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
                     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
                         <div class="input-group-text"></div>
                     </div>
@@ -39,7 +51,7 @@ set_time_limit ( 0);
             <div class="form-group">
                 CheckOut
                 <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                    <input type="text" name="check_out" class="form-control datetimepicker-input"  data-target="#datetimepicker2"/>
+                    <input type="text" name="check_out" value="<?php echo $today2 ?>" class="form-control datetimepicker-input"  data-target="#datetimepicker2"/>
                     <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                         <div class="input-group-text"></div>
                     </div>

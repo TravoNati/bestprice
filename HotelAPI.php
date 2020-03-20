@@ -11,7 +11,7 @@ class HotelAPI{
     {
         $this->http = new Http();
     }
-    function GrabHotels($location, $radius, $hotel_checkin, $hotel_checkout){
+    function GrabHotels($location, $radius, $hotel_checkin, $hotel_checkout, $timeouts){
         // Check-In EpochTime
         $checkindate = strtotime("$hotel_checkin");
         $checkin = $checkindate . '000';
@@ -35,7 +35,7 @@ class HotelAPI{
                     "CheckOut": "\/Date('. $checkout.')\/",
                     "ContractIds": null,
                     "DetailLevel": 9,
-                    "TimeoutSeconds": 3,
+                    "TimeoutSeconds": ' . $timeouts.',
                     "ExcludeHotelDetails": false,
                     "HotelLocation": ' . $location.',
                     "GeoLocationInfo": null,        
@@ -79,6 +79,9 @@ class HotelAPI{
         $id = 0;
         foreach ($hotels as $hotel){
             $temp = $this->GrabHotelInfo($hotel);
+            if (strpos($temp, 'SessionId not found') !== false) {
+            break;
+            }
             $info = array();
             $info['contract_id'] = $this->http->GetBetween($temp, 'ContractId":', ',');
             //$info['final_price'] = $this->http->GetBetween($temp, 'FinalPrice":', ',');
@@ -87,9 +90,8 @@ class HotelAPI{
             $info['final_price'] = $allPrices[0];
             $info['hotel_id'] = $hotel;
             $info['supplier_id'] = $this->http->GetBetween($temp, 'SupplierId":', ',');
-            $info['room_name'] = $this->http->GetBetween($temp, 'RoomName":', '",');
+            $info['room_name'] = $this->http->GetBetween($temp, 'RoomName":', ',');
             $info['first_price'] = $finalPrices[$id];
-            $info['room_name'] = $this->http->GetBetween($temp, 'SessionID":', '"');
             $results[] = $info;
             $id++;
         }
@@ -103,7 +105,7 @@ class HotelAPI{
                 "ClientIP": null,
                 "HotelID": ' . $id . ',
                 "ReturnTaxesAndFees": true,
-                "TimeoutSeconds": 2
+                "TimeoutSeconds": 3
             },
             "RequestType": 22,
             "SessionID": "'.$this->session.'",
